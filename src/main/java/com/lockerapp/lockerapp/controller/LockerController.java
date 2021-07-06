@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/locker")
+@RequestMapping("/api/locker")
 public class LockerController {
 
     @Autowired

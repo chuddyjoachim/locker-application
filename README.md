@@ -7,7 +7,7 @@ Check for available secure public and private lockers available around you in yo
 
 **Server:** Java, Springboot, jpa, postgresql 
 
-**Client:** React, Typescript, TailwindCSS
+**Client:** React, Typescript, TailwindCSS, Zustand
 
 ## Structure
 

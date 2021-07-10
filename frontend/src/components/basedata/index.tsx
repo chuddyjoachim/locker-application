@@ -2,41 +2,79 @@ import React from "react"
 import Select from "react-select";
 import LockerData from "../lockerdata";
 import locker from '../../assets/images/lockerge.jpeg'
+import { sortBySizeArray} from "../../lib/constant";
+import { Star } from "../star";
+import { useStoreBySizeStore } from "../../lib/stores/useSearchBySizeStore";
+import { useFetchData } from "../../lib/stores/useFetchData";
+import { useInputDataStore } from "../../lib/stores/useInputDataStore";
 
-export const Star = (style:any) =>{
-    return(
-        <svg 
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill=" rgba(251, 191, 36,1)"
-            stroke="#393939"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={style}
-            className="text-yellow-400 "
-        >
-            <polygon
-            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-            ></polygon>
-        </svg>
-    )
-}
 
-const BaseData = () => {
-    const [selected, setSelect] = React.useState({value:"Featured", label:"Featured"});
+const BaseData:React.FC = () => {
+    const {searchBySize, setSearchBySize} = useStoreBySizeStore()
+    const {fetchData, dataError, dataLoading} = useFetchData()
+    const {inputData} = useInputDataStore()
 
-    
-
-    const handleChange = (selected:any) =>{
-        setSelect(selected)
+    const handleChange = (searchBySize:any) =>{
+        setSearchBySize(searchBySize)
     }
-    const selectArray = [
-        {value:"Small", label:"Small"},
-        {value:"Medium", label:"Medium"},
-        {value:"Large", label:"Large"}
-    ]
+
+    const dataX = () => {
+        if(dataLoading){
+            return (<div className="flex flex-row justify-center items-center w-screen h-screen p-4">
+            <div className="flex flex-row justify-center items-center text-center font-bold text-black">Loading...</div>
+        </div>)
+            
+        }
+        if(dataError){
+            return(
+            <div className="flex flex-row justify-center items-center w-screen h-screen p-4">
+            <div className="flex flex-row justify-center items-center text-center font-bold text-black">No Locker Found in {inputData}</div>
+        </div>)
+        }
+        if(fetchData){
+            if(searchBySize.value==="small"){
+            const fdata = fetchData.filter((a)=>{
+                const {size} = a;
+                return size === "small"
+            }).map(locker=>{     
+             const{id} = locker
+                return <LockerData key={id} locker={locker} />
+            })
+                return fdata
+            }
+
+            if(searchBySize.value==="medium"){
+            const fdata = fetchData.filter((a)=>{
+                const {size} = a;
+                return size === "medium"
+            }).map(locker=>{    
+             const{id} = locker
+                return <LockerData key={id} locker={locker} />
+            })
+                return fdata
+            }
+
+            if(searchBySize.value==="large"){
+            const fdata = fetchData.filter((a)=>{
+                const {size} = a;
+                return size === "large"
+            }).map(locker=>{  
+             const{id} = locker
+                return <LockerData key={id} locker={locker} />
+            })
+                return fdata
+            }
+            if(searchBySize.value==="all"){
+                const mappedData = fetchData.map(locker=>{      
+                 const{id} = locker
+                    return <LockerData key={id} locker={locker} />
+                })
+                    return mappedData
+            }
+            
+        }
+    }
+   
     return (
         <div>
             <div className="wrapper p-4 flex-row flex">
@@ -63,15 +101,13 @@ const BaseData = () => {
                 <div className="right_dr flex-grow pl-3">
                     <div className="top-sort flex flex-row justify-between items-center">
                         <div className="select_bx max-w-xs flex-grow mb-1.5">
-                        <Select options={selectArray} className="flex-grow bg-gray-300 text-gray-700" value={selected} onChange={handleChange} />
+                        <Select options={sortBySizeArray} className="flex-grow bg-gray-300 text-gray-700" value={searchBySize} onChange={handleChange} />
                         </div>
                         <a href="http://" className="text-blue-700 underline font-semibold">view style guide</a>
                     </div>
-                    <LockerData/>
-                    <LockerData/>
-                    <LockerData/>
-                    <LockerData/>
-                    <LockerData/>
+                    {
+                        dataX()
+                    }
 
                 </div>
             </div>

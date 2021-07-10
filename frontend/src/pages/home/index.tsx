@@ -1,5 +1,7 @@
 import React from 'react'
 import Banner from '../../components/banner/banner'
+import BaseData from '../../components/basedata'
+import BottomData from '../../components/bottomdata'
 import Search from '../../components/search'
 
 const Home = () => {
@@ -10,6 +12,8 @@ const Home = () => {
                 <Search/>
                 </div>
             </Banner>
+            <BottomData/>
+            <BaseData/>
         </>
     )
 }

@@ -1,6 +1,5 @@
 package com.lockerapp.lockerapp.controller;
 
-
 import com.lockerapp.lockerapp.entity.Locker;
 import com.lockerapp.lockerapp.repository.LockerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,8 @@ public class LockerController {
     private LockerRepository LockerRepository;
 
     /* List All Lockers */
-    @CrossOrigin
-    @GetMapping("/listAll")
-    public List<Locker> listAllLocker(){
+    @GetMapping("/listall")
+    public List<Locker> listAllLocker() {
         List<Locker> locker = LockerRepository.findAll();
         return locker;
     }
@@ -27,36 +25,32 @@ public class LockerController {
     /* Add Locker */
     @CrossOrigin
     @PostMapping("/addlocker")
-    public Locker addlocker(@Valid @RequestBody Locker locker){
+    public Locker addlocker(@Valid @RequestBody Locker locker) {
         Locker newLocker = LockerRepository.save(locker);
         return newLocker;
     }
 
-    /* Get Locker By Id*/
+    /* Get Locker By Id */
     @CrossOrigin
     @GetMapping("/getlockerbyid/{id}")
-    public Object getLockerById(@PathVariable long id){
-        Locker locker =  LockerRepository.findById(id);
-        /*if (locker == null){
-            return ("{message: not found}");
-        }*/
-//        System.out.println("locker = "+locker);
+    public Object getLockerById(@PathVariable long id) {
+        Locker locker = LockerRepository.findById(id);
         return locker;
     }
 
-    /* Get Locker By City*/
+    /* Get Locker By City */
     @CrossOrigin
     @GetMapping("/getlockerbycity/{city}")
-    public List<Locker> getLockerByCity(@PathVariable String city){
+    public List<Locker> getLockerByCity(@PathVariable String city) {
         List<Locker> locker = LockerRepository.findByCity(city);
         return locker;
     }
 
-    /* Get Locker By State*/
+    /* Get Locker By State */
     @CrossOrigin
     @GetMapping("/getlockerbystate/{state}")
-    public List<Locker>  getLockerByState(@PathVariable String state){
-        List<Locker>  locker = LockerRepository.findByState(state);
+    public List<Locker> getLockerByState(@PathVariable String state) {
+        List<Locker> locker = LockerRepository.findByState(state);
         return locker;
     }
 }

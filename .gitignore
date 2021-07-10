@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#  automatically generated css file
+/frontend/src/index.css

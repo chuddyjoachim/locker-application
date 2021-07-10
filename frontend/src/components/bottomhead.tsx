@@ -2,9 +2,7 @@ import React from "react";
 import Select from "react-select";
 
 const Bottomhead = () => {
-    const [selected, setSelect] = React.useState({value:"closest", label:"closest"});
-
-    
+    const [selected, setSelect] = React.useState({value:"closest", label:"closest"});    
 
     const handleChange = (selected:any) =>{
         setSelect(selected)
